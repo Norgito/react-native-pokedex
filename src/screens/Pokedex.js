@@ -1,46 +1,41 @@
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getPokemonsApi, getPokemonDetailsByUrlApi } from "../api/PokeApi";
-
+import PokemonList from "../components/PokemonList";
 
 export default function Pokedex() {
-
   const [pokemons, setPokemons] = useState([]);
-  console.log('pokemons--->',pokemons);
 
   useEffect(() => {
-    (async () => {
-      await loadPokemons();
-    })()
-  }, [])
+    const loadPokemons = async () => {
+      try {
+        const response = await getPokemonsApi();
 
-  const loadPokemons = async () => {
-    try {
-      const response = await getPokemonsApi();
+        const pokemonsArray = [];
 
-      const pokemonsArray = [];
-      for await (const pokemon of response.results) {
-        const pokemonDetails = await getPokemonDetailsByUrlApi(pokemon.url)
-        
-        pokemonsArray.push({
-          id: pokemonDetails.id,
-          name: pokemonDetails.name,
-          type: pokemonDetails.types[0].type.name,
-          order: pokemonDetails.order,
-          image: pokemonDetails.sprites.other['home'].front_default
-        })
+        setPokemons(pokemonsArray);
+        for await (const pokemon of response.results) {
+          const pokemonDetails = await getPokemonDetailsByUrlApi(pokemon.url);
+
+          pokemonsArray.push({
+            id: pokemonDetails.id,
+            name: pokemonDetails.name,
+            type: pokemonDetails.types[0].type.name,
+            order: pokemonDetails.order,
+            image: pokemonDetails.sprites.other["home"].front_default,
+          });
+        }
+        setPokemons([...pokemons, ...pokemonsArray]);
+      } catch (error) {
+        console.error(error);
       }
-
-      setPokemons([...pokemons, ...pokemonsArray]);
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  
+    };
+    return loadPokemons;
+  }, []);
 
   return (
     <SafeAreaView>
-      <Text>Pokedex</Text>
+      <PokemonList pokemons={pokemons} />
     </SafeAreaView>
   );
 }
