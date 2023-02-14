@@ -17,6 +17,6 @@ export const POKEMON_TYPE_COLORS = {
     psychic: "#F85888",
     ice: "#98D8D8",
     dragon: "#7038F8",
-    dark: "#705848",
+    dark: "#795746",
     fairy: "#EE99AC",
   };
