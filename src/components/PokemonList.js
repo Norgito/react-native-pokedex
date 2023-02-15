@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "react-native";
 import { StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import PokemonCard from "./PokemonCard";
 
@@ -38,6 +39,6 @@ const styles = StyleSheet.create({
   },
   spinner: {
     marginTop: 20,
-    marginBottom: 60,
+    marginBottom: Platform.OS === 'android' ? 60 : 80,
   },
 });
