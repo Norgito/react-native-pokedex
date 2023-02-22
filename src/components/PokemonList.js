@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
   },
   spinner: {
     marginTop: 20,
-    marginBottom: Platform.OS === 'android' ? 60 : 80,
+    marginBottom: Platform.OS === "android" ? 60 : 80,
   },
 });

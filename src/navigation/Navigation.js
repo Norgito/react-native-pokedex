@@ -4,18 +4,35 @@ import { Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { Favorite, Pokedex, Account, Pokemon } from "../index";
 
-
 export default function Navigation() {
-  const Tab = createBottomTabNavigator()
+  const Tab = createBottomTabNavigator();
   const PokemonStack = createNativeStackNavigator();
 
   const StackPokemon = () => {
-    return (<PokemonStack.Navigator>
-      <PokemonStack.Screen name="Pokedex" component={Pokedex} options={{ title: "POKEMONS", headerTransparent: false, headerTitleAlign: "center" }} />
-      <PokemonStack.Screen name="Pokemon" component={Pokemon} />
-    </PokemonStack.Navigator>
-    )
-  }
+    return (
+      <PokemonStack.Navigator>
+        <PokemonStack.Screen
+          name="Pokedex"
+          component={Pokedex}
+          options={{
+            title: "POKEMONS",
+            headerTransparent: false,
+            headerTitleAlign: "center",
+          }}
+        />
+        <PokemonStack.Screen
+          name="Pokemon"
+          component={Pokemon}
+          options={{
+            title: "",
+            headerShown: true,
+            headerTransparent: true,
+            headerShadowVisible: false,
+          }}
+        />
+      </PokemonStack.Navigator>
+    );
+  };
   return (
     <Tab.Navigator initialRouteName="StackPokemon">
       <Tab.Screen
@@ -30,11 +47,15 @@ export default function Navigation() {
           ),
         }}
       />
-      <Tab.Screen name="StackPokemon" component={StackPokemon} options={{
-        tabBarLabel: "",
-        headerShown: false,
-        tabBarIcon: () => renderPokeball()
-      }} />
+      <Tab.Screen
+        name="StackPokemon"
+        component={StackPokemon}
+        options={{
+          tabBarLabel: "",
+          headerShown: false,
+          tabBarIcon: () => renderPokeball(),
+        }}
+      />
       <Tab.Screen
         name="Account"
         component={Account}
